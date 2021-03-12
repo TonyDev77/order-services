@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ClientRegisterService {
+public class ClientService {
 
     @Autowired
     private ClientRepository clientRepository;
@@ -19,7 +19,6 @@ public class ClientRegisterService {
         if (clientExists != null && !clientExists.equals(client)) {
             throw new DomainException("Já existe um cliente cadastrado com este email");
         }
-
         return clientRepository.save(client);
     }
 

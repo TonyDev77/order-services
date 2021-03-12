@@ -30,8 +30,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handlerDomainException(DomainException ex, WebRequest request) {
 
         HttpStatus status = HttpStatus.BAD_REQUEST;
-        Problem problem = new Problem();
 
+        Problem problem = new Problem();
         problem.setStatus(status.value());
         problem.setTitle(ex.getMessage());
         problem.setDateHour(LocalDateTime.now());
@@ -39,7 +39,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
     }
 
-    // Trata exceções gerais
+    // Trata exceções genéricas
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
