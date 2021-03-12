@@ -1,10 +1,14 @@
 package com.tony.services.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tony.services.domain.ValidationGroups;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -16,8 +20,10 @@ public class OrderOfWork {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @Valid
+    @ConvertGroup(from = Default.class, to = ValidationGroups.ClientID.class)
     @NotNull
+    @ManyToOne
     private Client client;
 
     @NotBlank
