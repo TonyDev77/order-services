@@ -1,45 +1,19 @@
-package com.tony.services.domain.model;
+package com.tony.services.api.repsentationModel;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tony.services.domain.ValidationGroups;
+import com.tony.services.domain.model.OrderOfWorkStatus;
 
-import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.groups.ConvertGroup;
-import javax.validation.groups.Default;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
-@Entity
-public class OrderOfWork {
+public class OrderOfWorkDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Valid
-    @ConvertGroup(from = Default.class, to = ValidationGroups.ClientID.class)
-    @NotNull
-    @ManyToOne
-    private Client client;
-
-    @NotBlank
+    private ClientSummaryDTO client;
     private String description;
-
-    @NotNull
     private BigDecimal price;
-
-    @Enumerated(EnumType.STRING)
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private OrderOfWorkStatus status;
-
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private OffsetDateTime openingDate;
-
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private OffsetDateTime closingDate;
 
     public Long getId() {
@@ -48,14 +22,6 @@ public class OrderOfWork {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
     }
 
     public String getDescription() {
@@ -98,11 +64,19 @@ public class OrderOfWork {
         this.closingDate = closingDate;
     }
 
+    public ClientSummaryDTO getClient() {
+        return client;
+    }
+
+    public void setClient(ClientSummaryDTO client) {
+        this.client = client;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof OrderOfWork)) return false;
-        OrderOfWork that = (OrderOfWork) o;
+        if (!(o instanceof OrderOfWorkDTO)) return false;
+        OrderOfWorkDTO that = (OrderOfWorkDTO) o;
         return id.equals(that.id);
     }
 

@@ -3,13 +3,14 @@ package com.tony.services.api.exceptionhandler;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Problem {
 
     private Integer status;
-    private LocalDateTime dateHour;
+    private OffsetDateTime dateHour;
     private String title;
 
     private List<FieldException> fieldExceptions;
@@ -22,11 +23,11 @@ public class Problem {
         this.status = status;
     }
 
-    public LocalDateTime getDateHour() {
+    public OffsetDateTime getDateHour() {
         return dateHour;
     }
 
-    public void setDateHour(LocalDateTime dateHour) {
+    public void setDateHour(OffsetDateTime dateHour) {
         this.dateHour = dateHour;
     }
 

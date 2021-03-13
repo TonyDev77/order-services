@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Service
 public class OrderOfWorkService {
@@ -27,7 +28,7 @@ public class OrderOfWorkService {
 
         orderOfWork.setClient(client);
         orderOfWork.setStatus(OrderOfWorkStatus.Opened);
-        orderOfWork.setOpeningDate(LocalDateTime.now());
+        orderOfWork.setOpeningDate(OffsetDateTime.now());
 
         return orderOfWorkRepository.save(orderOfWork);
     }
