@@ -1,5 +1,6 @@
 package com.tony.services.api.controller;
 
+import com.tony.services.api.repsentationModel.InputOrderOfWorDTO;
 import com.tony.services.api.repsentationModel.OrderOfWorkDTO;
 import com.tony.services.domain.model.OrderOfWork;
 import com.tony.services.domain.repository.OrderOfWorkRepository;
@@ -26,13 +27,6 @@ public class OrderOfWorkController {
     @Autowired
     private ModelMapper modelMapper; // configurado via annotation em ModelMapperConfig.java
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public OrderOfWorkDTO saveOrderOfWork(@Valid @RequestBody OrderOfWork orderOfWork) {
-
-        return mapToModel(orderOfWorkService.saveWork(orderOfWork));
-    }
-
     @GetMapping
     public List<OrderOfWorkDTO> findAllOrderOfWork() {
 
@@ -51,16 +45,29 @@ public class OrderOfWorkController {
         return ResponseEntity.notFound().build();
     }
 
-    // mapeia uma entity p/ DTO
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public OrderOfWorkDTO saveOrderOfWork(@Valid @RequestBody InputOrderOfWorDTO inputOrderOfWorDTO) {
+
+        OrderOfWork orderOfWork = mapToEntity(inputOrderOfWorDTO);
+        return mapToModel(orderOfWorkService.saveWork(orderOfWork));
+    }
+
+    // mapeia/converte uma Entity p/ DTO
     private OrderOfWorkDTO mapToModel(OrderOfWork orderOfWork) {
         return modelMapper.map(orderOfWork, OrderOfWorkDTO.class);
     }
 
-    // mapeia uma coleção de entity p/ DTO
+    // mapeia/converte uma coleção de Entity p/ DTO
     private List<OrderOfWorkDTO> mapToCollectionModel(List<OrderOfWork> orderOfWorks) {
         return orderOfWorks.stream()
                 .map(x -> mapToModel(x))
                 .collect(Collectors.toList());
+    }
+
+    // mapeia/converte uma DTO p/ Entity
+    private OrderOfWork mapToEntity(InputOrderOfWorDTO inputOrderOfWorDTO) {
+        return modelMapper.map(inputOrderOfWorDTO, OrderOfWork.class);
     }
 
 }
