@@ -1,6 +1,7 @@
 package com.tony.services.api.exceptionhandler;
 
 import com.tony.services.domain.exception.DomainException;
+import com.tony.services.domain.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -26,11 +27,25 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @Autowired
     private MessageSource messageSource;
 
-    // trata erro ao inserir caso já exista um cliente
+    // trata erro ao lançados pela DomainException
     @ExceptionHandler(DomainException.class)
     public ResponseEntity<Object> handlerDomainException(DomainException ex, WebRequest request) {
 
         HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        Problem problem = new Problem();
+        problem.setStatus(status.value());
+        problem.setTitle(ex.getMessage());
+        problem.setDateHour(OffsetDateTime.now());
+
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+    }
+
+    // trata erro ao lançados pela EntityNotFoundException
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Object> handlerDomainException(EntityNotFoundException ex, WebRequest request) {
+
+        HttpStatus status = HttpStatus.NOT_FOUND;
 
         Problem problem = new Problem();
         problem.setStatus(status.value());

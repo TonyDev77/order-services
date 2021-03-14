@@ -1,6 +1,7 @@
 package com.tony.services.domain.services;
 
 import com.tony.services.domain.exception.DomainException;
+import com.tony.services.domain.exception.EntityNotFoundException;
 import com.tony.services.domain.model.Client;
 import com.tony.services.domain.model.Comments;
 import com.tony.services.domain.model.OrderOfWork;
@@ -40,7 +41,7 @@ public class OrderOfWorkService {
     public Comments addComments(Long orderOfWorkId, String description) {
 
         OrderOfWork orderOfWork = orderOfWorkRepository.findById(orderOfWorkId)
-                .orElseThrow(() -> new DomainException("Ordem de serviço não encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada"));
 
         Comments comments = new Comments();
         comments.setPostDate(OffsetDateTime.now());
