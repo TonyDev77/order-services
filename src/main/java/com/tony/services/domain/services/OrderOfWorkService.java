@@ -31,7 +31,7 @@ public class OrderOfWorkService {
                 .orElseThrow(() -> new DomainException("Cliente pode não existir no Banco de Dados"));
 
         orderOfWork.setClient(client);
-        orderOfWork.setStatus(OrderOfWorkStatus.Opened);
+        orderOfWork.setStatus(OrderOfWorkStatus.OPENED);
         orderOfWork.setOpeningDate(OffsetDateTime.now());
 
         return orderOfWorkRepository.save(orderOfWork);
@@ -40,8 +40,7 @@ public class OrderOfWorkService {
     // Add comentários nos serviços
     public Comments addComments(Long orderOfWorkId, String description) {
 
-        OrderOfWork orderOfWork = orderOfWorkRepository.findById(orderOfWorkId)
-                .orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada"));
+        OrderOfWork orderOfWork = getOrderWork(orderOfWorkId);
 
         Comments comments = new Comments();
         comments.setPostDate(OffsetDateTime.now());
@@ -49,5 +48,18 @@ public class OrderOfWorkService {
         comments.setOrderOfWork(orderOfWork);
 
         return commentsRepository.save(comments);
+    }
+
+    // Finaliza uma ordem de serviço
+    public void endOrderOfWork(Long orderOfWorkId) {
+        OrderOfWork orderOfWork = getOrderWork(orderOfWorkId);
+        orderOfWork.endedWork();
+        orderOfWorkRepository.save(orderOfWork);
+    }
+
+    // Busca Ordens de serviços p/ serem manipuladas
+    private OrderOfWork getOrderWork(Long orderOfWorkId) {
+        return orderOfWorkRepository.findById(orderOfWorkId)
+                .orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada"));
     }
 }

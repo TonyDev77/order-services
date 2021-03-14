@@ -1,5 +1,7 @@
 package com.tony.services.domain.model;
 
+import com.tony.services.domain.exception.DomainException;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -104,5 +106,23 @@ public class OrderOfWork {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+
+    public boolean canEnded() {
+        return OrderOfWorkStatus.OPENED.equals(getStatus());
+    }
+
+    public boolean notCanEnded() {
+        return !canEnded();
+    }
+
+    public void endedWork() {
+
+        if (notCanEnded()) {
+            throw new DomainException("Ordem de serviço não pode ser finalizada");
+        }
+        setStatus(OrderOfWorkStatus.ENDED);
+        setClosingDate(OffsetDateTime.now());
     }
 }

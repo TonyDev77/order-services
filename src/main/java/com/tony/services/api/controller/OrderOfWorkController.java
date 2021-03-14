@@ -53,6 +53,12 @@ public class OrderOfWorkController {
         return mapToModel(orderOfWorkService.saveWork(orderOfWork));
     }
 
+    @PutMapping("/{orderOfWorkId}/end-work")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void endOrderOfWork(@PathVariable Long orderOfWorkId) {
+        orderOfWorkService.endOrderOfWork(orderOfWorkId);
+    }
+
     // mapeia/converte uma Entity p/ DTO
     private OrderOfWorkDTO mapToModel(OrderOfWork orderOfWork) {
         return modelMapper.map(orderOfWork, OrderOfWorkDTO.class);
