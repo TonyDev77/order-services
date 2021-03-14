@@ -3,6 +3,8 @@ package com.tony.services.domain.model;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -23,6 +25,9 @@ public class OrderOfWork {
 
     private OffsetDateTime openingDate;
     private OffsetDateTime closingDate;
+
+    @OneToMany(mappedBy = "orderOfWork")
+    private List<Comments> comments = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -78,6 +83,14 @@ public class OrderOfWork {
 
     public void setClosingDate(OffsetDateTime closingDate) {
         this.closingDate = closingDate;
+    }
+
+    public List<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comments> comments) {
+        this.comments = comments;
     }
 
     @Override

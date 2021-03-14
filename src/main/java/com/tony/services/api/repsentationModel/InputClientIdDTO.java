@@ -2,7 +2,7 @@ package com.tony.services.api.repsentationModel;
 
 import javax.validation.constraints.NotNull;
 
-public class ClientIdInput {
+public class InputClientIdDTO {
 
     @NotNull
     private Long id;

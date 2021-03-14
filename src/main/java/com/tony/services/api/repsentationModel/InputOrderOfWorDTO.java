@@ -14,7 +14,7 @@ public class InputOrderOfWorDTO {
 
     @Valid
     @NotNull
-    private ClientIdInput client;
+    private InputClientIdDTO client;
 
     public String getDescription() {
         return description;
@@ -32,11 +32,11 @@ public class InputOrderOfWorDTO {
         this.price = price;
     }
 
-    public ClientIdInput getClient() {
+    public InputClientIdDTO getClient() {
         return client;
     }
 
-    public void setClient(ClientIdInput client) {
+    public void setClient(InputClientIdDTO client) {
         this.client = client;
     }
 }
