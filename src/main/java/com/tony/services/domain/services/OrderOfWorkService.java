@@ -37,7 +37,7 @@ public class OrderOfWorkService {
         return orderOfWorkRepository.save(orderOfWork);
     }
 
-    // Add comentários nos serviços
+    // Adiciona comentários nos serviços
     public Comments addComments(Long orderOfWorkId, String description) {
 
         OrderOfWork orderOfWork = getOrderWork(orderOfWorkId);
