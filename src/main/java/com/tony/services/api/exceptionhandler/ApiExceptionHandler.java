@@ -59,21 +59,21 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
-        List<Problem.FieldException> fieldException = new ArrayList<Problem.FieldException>();
+        List<Problem.FieldException> fieldExceptionList = new ArrayList<Problem.FieldException>();
 
         for (ObjectError error : ex.getBindingResult().getAllErrors()) {
 
             String errorName = ((FieldError) error).getField();
             String errorMessage = messageSource.getMessage(error, LocaleContextHolder.getLocale());
 
-            fieldException.add(new Problem.FieldException(errorName, errorMessage));
+            fieldExceptionList.add(new Problem.FieldException(errorName, errorMessage));
         }
 
         Problem problem = new Problem();
         problem.setStatus(status.value());
         problem.setTitle("Um ou mais campos estão incorretos.");
         problem.setDateHour(OffsetDateTime.now());
-        problem.setFieldExceptions(fieldException);
+        problem.setFieldExceptions(fieldExceptionList);
 
 
         // Trata erros específicos

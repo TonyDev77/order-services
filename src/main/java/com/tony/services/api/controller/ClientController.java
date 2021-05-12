@@ -3,6 +3,8 @@ package com.tony.services.api.controller;
 import com.tony.services.domain.model.Client;
 import com.tony.services.domain.repository.ClientRepository;
 import com.tony.services.domain.services.ClientService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/clients")
 public class ClientController {
+
+    // Informações de log
+    private static final Logger log = LoggerFactory.getLogger(ClientController.class);
 
     @Autowired
     private ClientRepository clientRepository;
@@ -31,6 +36,7 @@ public class ClientController {
     public ResponseEntity<Client> findById(@PathVariable Long clientId) {
         Optional<Client> client = clientRepository.findById(clientId);
         if (client.isPresent()) {
+            log.info("Helooooooo world - " + client);
             return ResponseEntity.ok(client.get());
         }
         return ResponseEntity.notFound().build();
